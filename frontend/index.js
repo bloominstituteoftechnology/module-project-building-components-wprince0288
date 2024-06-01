@@ -48,6 +48,12 @@ function moduleProject3() {
       card.appendChild(p)
     })
 
+    card.addEventListener('click', evt => {
+      document.querySelectorAll('.learner-card').forEach(card => {
+        card.classList.remove('active')
+      })
+      card.classList.add('active')
+    })
     return card
   }
 
@@ -79,7 +85,47 @@ function moduleProject3() {
 
   function buildFooter(footerData) {
     //  ✨ do your magic here
-    return document.createElement('footer')
+    const footer = document.createElement('footer')
+
+    let companyInfoDiv = document.createElement('div')
+    companyInfoDiv.classList.add('company-info')
+
+  let companyNameP = document.createElement('p')
+  companyNameP.classList.add('company-name')
+  companyNameP.textContent = footerData.companyName
+
+  let addressP = document.createElement('p')
+  addressP.classList.add('address')
+  addressP.textContent = footerData.address
+
+  let contactEmailP = document.createElement('p')
+  contactEmailP.classList.add('contact-email')
+  contactEmailP.innerHTML = `Email: <a href="mailto:${footerData.contactEmail}"> ${footerData.contactEmail}</a>`
+
+  companyInfoDiv.appendChild(companyNameP)
+  companyInfoDiv.appendChild(addressP)
+  companyInfoDiv.appendChild(contactEmailP)
+
+  
+  let socialMediaDiv = document.createElement('div')
+  socialMediaDiv.classList.add('social-media')
+  
+  for (let platform in footerData.socialMedia) {
+    let socialMediaLink = document.createElement('a')
+    socialMediaLink.href = footerData.socialMedia[platform]
+    socialMediaLink.textContent = platform.charAt(0).toUpperCase() + platform.slice(1)
+    socialMediaDiv.appendChild(socialMediaLink)
+  }
+  
+  let currentYear = new Date().getFullYear()
+  let copyright = document.createElement('div')
+  copyright.textContent = `© ${footerData.companyName.toUpperCase()} ${currentYear}`
+
+  footer.appendChild(companyInfoDiv)
+  footer.appendChild(socialMediaDiv)
+  footer.appendChild(copyright)
+
+  return footer
   }
 
   // ❗ DOM creation using your `buildFooter` component (do not change):
